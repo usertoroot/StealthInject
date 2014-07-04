@@ -987,6 +987,7 @@ char* ToLower(char* text)
 	return text;
 }
 
+#ifndef STATIC_LIBRARY
 int main(int argc, const char* argv[])
 {
 	const char* dll;
@@ -1051,3 +1052,4 @@ int main(int argc, const char* argv[])
 
 	return 0;
 }
+#endif //STATIC_LIBRARY
