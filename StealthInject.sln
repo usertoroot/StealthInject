@@ -7,12 +7,18 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StealthInject", "src\Stealt
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug Static Library|Win32 = Debug Static Library|Win32
 		Debug|Win32 = Debug|Win32
+		Release Static Library|Win32 = Release Static Library|Win32
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B01E3CE3-18F9-46B5-B33E-AC1B3B66BBC8}.Debug Static Library|Win32.ActiveCfg = Debug Static Library|Win32
+		{B01E3CE3-18F9-46B5-B33E-AC1B3B66BBC8}.Debug Static Library|Win32.Build.0 = Debug Static Library|Win32
 		{B01E3CE3-18F9-46B5-B33E-AC1B3B66BBC8}.Debug|Win32.ActiveCfg = Debug|Win32
 		{B01E3CE3-18F9-46B5-B33E-AC1B3B66BBC8}.Debug|Win32.Build.0 = Debug|Win32
+		{B01E3CE3-18F9-46B5-B33E-AC1B3B66BBC8}.Release Static Library|Win32.ActiveCfg = Release Static Library|Win32
+		{B01E3CE3-18F9-46B5-B33E-AC1B3B66BBC8}.Release Static Library|Win32.Build.0 = Release Static Library|Win32
 		{B01E3CE3-18F9-46B5-B33E-AC1B3B66BBC8}.Release|Win32.ActiveCfg = Release|Win32
 		{B01E3CE3-18F9-46B5-B33E-AC1B3B66BBC8}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection

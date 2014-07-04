@@ -961,7 +961,7 @@ bool StealthLoadLibraryMemory(HANDLE hProcess, void* address)
 	return true;
 }
 
-extern "C" _declspec(dllexport) void StealthLoadLibrary(HANDLE hProcess, const char* path)
+void StealthLoadLibrary(HANDLE hProcess, const char* path)
 {
 	HANDLE hDllFile = CreateFileA(path, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 	if (hDllFile == INVALID_HANDLE_VALUE)
