@@ -40,76 +40,16 @@ Currently not supported.
 Usage
 -----
 
-The **StealthInject** program consists out of a DLL which should be invoked using [HookFunction](https://git.koenj.com/koenj/hookfunction). The executable will inject the DLL into the remote process and invoke the python functions. **StealthInject** is made to hook arbitrary functions using simple python scripts and it allows for easy proxy function injection. Currently the hooking of any **cdecl**, **thiscall** and **stdcall** function is supported.
+The **StealthInject** program allows you to inject a DLL into a process without using library loading function calls. This also means that the DLL will remain unlisted in the module list.
 
 Example
 -------
 
-The following command will hook a function in the program **InterceptMe.exe** at the relative virtual address **0x11177**. This relative virtual address indicates the address of the **RC4** cryptography function. The next parameter is the full path to the DLL containing the proxy function. The next parameter is the name of the function we want to invoke in **StealthInject.DLL**. Therefore this parameter will always be **PythonHook**. The next parameter contains the name of the python function to invoke. In this case the name is **ProxyRC4**. The last two parameters indicate the declaration specification (cdecl, stdcall, thiscall) and the amount of parameters. The python script is expected to be named **Hooks.py** and it should be located in the working directory of the executable you want to inject in. The full command is shown below:
+The following command will stealthily inject TestDll.dll into the program **InterceptMe.exe**. The full command is shown below:
 
 ```
-HookFunction InterceptMe.exe 0x11177 "D:\Projects\Werk\StealthInject\bin\x86\StealthInject.DLL" PythonHook ProxyRC4 cdecl 5
+StealthInject "C:\TestDll.dll" InterceptMe.exe
 ```
-
-An example proxy python script is shown below:
-
-```python
-import StealthInject
-
-def ProxyRC4(input, inputLength, key, keyLength, output):
-    print("RC4(%08X, %i, %08X, %i, %08X)" % (input, inputLength, key, keyLength, output))
-
-    StealthInject.CallOriginalFunction(input, inputLength, key, keyLength, output)
-```
-
-Every time the **RC4** function in the program will be invoked our program will intercept the code flow. This allows us to do tampering before encryption and after decryption. When invoking the command this way python will assume all parameters to be integers. There is an additional parameter which will allow us to specify the types allowing for easier tampering. The full command is shown below:
-
-
-```
-HookFunction InterceptMe.exe 0x11177 "X:\...\StealthInject.DLL" PythonHook ProxyRC4 cdecl 5 sisii
-```
-
-An example proxy python script is shown below:
-
-```python
-import StealthInject
-
-def ProxyRC4(input, inputLength, key, keyLength, output):
-    print("RC4(%s, %i, %s, %i, %08X)" % (input, inputLength, key, keyLength, output))
-
-    #Tampering the data to be encrypted to be "GAAPEN".
-    StealthInject.CallOriginalFunction("GAAPEN", 6, key, keyLength, output)
-```
-
-The types for the format string `sisii` are as follows:
-- b - char
-- B - unsigned char
-- h - short int
-- H - unsigned short int
-- i - int
-- I - unsigned int
-- l - long
-- k - unsigned long
-- f - float
-- s - UTF-8 string
-- u - unicode string
-- y - bytes
-
-Added python functions
-----------------------
-
-The following python functions have been added:
-
-
-|     Function name    |           Parameters           |                Description              |                Return Value              |
-| -------------------- | ------------------------------ | --------------------------------------- | ---------------------------------------- |
-| WriteMemoryInteger   | integer address, integer value | Write an integer to a memory location.  | Returns 1 on success.                    |
-| ReadMemoryInteger    | integer address                | Read an integer from a memory location. | Return value on success.                 |
-| WriteMemoryByte      | integer address, byte value    | Write an byte to a memory location.     | Returns 1 on success.                    |
-| ReadMemoryByte       | integer address                | Read an byte from a memory location.    | Return value on success.                 |
-| WriteMemoryString    | integer address, string value  | Write a string to a memory location.    | Returns 1 on success.                    |
-| ReadMemoryString     | integer address                | Read a string from a memory location.   | Return value on success.                 |
-| CallOriginalFunction | original parameters (variable) | Call the original function.             | Return result of call on success else 0. |
 
 Additional Notes
 ----------------
